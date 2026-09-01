@@ -28,6 +28,7 @@ func ResourceCapsManAccessList() *schema.Resource {
 	resSchema := map[string]*schema.Schema{
 		MetaResourcePath: PropResourcePath("/caps-man/access-list"),
 		MetaId:           PropId(Id),
+		MetaSkipFields:   PropSkipFields(),
 
 		KeyComment:  PropCommentRw,
 		KeyDisabled: PropDisabledRw,

@@ -153,7 +153,7 @@ func ResourceWifiConfiguration() *schema.Resource {
 			Elem:             &schema.Schema{Type: schema.TypeString},
 			Description:      "Security inline settings.",
 			ValidateDiagFunc: ValidationMapKeyNames,
-			DiffSuppressFunc: AlwaysPresentNotUserProvided,
+			DiffSuppressFunc: WifiInlineMapDiffSuppress,
 		},
 		"ssid": {
 			Type:        schema.TypeString,

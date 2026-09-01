@@ -246,7 +246,7 @@ func ResourceInterfaceBridge() *schema.Resource {
 			Optional: true,
 			Description: "Bridge priority, used by STP to determine root bridge, used by MSTP to determine CIST " +
 				"and IST regional root bridge. This property has no effect when protocol-mode is set to none.",
-			DiffSuppressFunc: AlwaysPresentNotUserProvided,
+			DiffSuppressFunc: HexEqual,
 		},
 		"protocol_mode": {
 			Type:     schema.TypeString,

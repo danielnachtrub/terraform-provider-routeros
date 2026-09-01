@@ -32,6 +32,7 @@ func ResourceWifiAccessList() *schema.Resource {
 	resSchema := map[string]*schema.Schema{
 		MetaResourcePath: PropResourcePath("/interface/wifi/access-list"),
 		MetaId:           PropId(Id),
+		MetaSkipFields:   PropSkipFields(),
 
 		"action": {
 			Type:         schema.TypeString,

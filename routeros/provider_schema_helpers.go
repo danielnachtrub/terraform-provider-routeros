@@ -88,6 +88,10 @@ func PropId(t IdType) *schema.Schema {
 }
 
 func toQuotedCommaSeparatedString(s ...string) string {
+	if len(s) == 0 {
+		return ""
+	}
+
 	builder := strings.Builder{}
 	const singleQuote = `"`
 	const commaSingleQuote = `,"`
@@ -839,6 +843,14 @@ var (
 	WifiInlineMapDiffSuppress = func(k, old, new string, d *schema.ResourceData) bool {
 		if strings.HasSuffix(k, ".config") && old == "" && new == "" {
 			return true
+		}
+		// Nested TypeMaps do not inherit HexEqual from named-profile schemas.
+		if old != "" && new != "" {
+			if iOld, errOld := strconv.ParseInt(old, 0, 64); errOld == nil {
+				if iNew, errNew := strconv.ParseInt(new, 0, 64); errNew == nil && iOld == iNew {
+					return true
+				}
+			}
 		}
 		return AlwaysPresentNotUserProvided(k, old, new, d)
 	}

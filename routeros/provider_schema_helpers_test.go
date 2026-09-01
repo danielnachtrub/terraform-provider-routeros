@@ -173,6 +173,11 @@ func Test_toQuotedCommaSeparatedString(t *testing.T) {
 			[]string{"a"},
 			`"a"`,
 		},
+		{
+			"Empty args",
+			[]string{},
+			"",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -229,5 +234,14 @@ func TestWifiInlineMapDiffSuppress_emptyConfig(t *testing.T) {
 	// nil ResourceData is fine: this branch does not call AlwaysPresentNotUserProvided.
 	if !WifiInlineMapDiffSuppress("configuration.config", "", "", nil) {
 		t.Fatal("expected suppress for absent vs empty config")
+	}
+}
+
+func TestWifiInlineMapDiffSuppress_hexCase(t *testing.T) {
+	if !WifiInlineMapDiffSuppress("security.ft_mobility_domain", "0xD8B7", "0xd8b7", nil) {
+		t.Fatal("expected suppress for hex case-only drift")
+	}
+	if WifiInlineMapDiffSuppress("security.ft_mobility_domain", "0xD8B7", "0xd8b8", nil) {
+		t.Fatal("expected no suppress for different hex values")
 	}
 }
