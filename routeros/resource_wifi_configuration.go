@@ -40,6 +40,9 @@ func ResourceWifiConfiguration() *schema.Resource {
 		MetaId:           PropId(Id),
 		MetaTransformSet: PropTransformSet("aaa.config: aaa", "channel.config: channel", "datapath.config: datapath",
 			"interworking.config: interworking", "security.config: security", "steering.config: steering"),
+		// "manager" is an enum; RouterOS rejects an empty value, so clearing it from the
+		// configuration must send "!manager" (unset) instead of manager="".
+		MetaSetUnsetFields: PropSetUnsetFields("manager"),
 
 		"aaa": {
 			Type:             schema.TypeMap,
