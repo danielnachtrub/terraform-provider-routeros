@@ -852,6 +852,10 @@ var (
 				}
 			}
 		}
+		// Without resource data there is no raw config to consult: never suppress.
+		if d == nil {
+			return false
+		}
 		return AlwaysPresentNotUserProvided(k, old, new, d)
 	}
 
